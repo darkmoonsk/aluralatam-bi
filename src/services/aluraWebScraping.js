@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const { get } = require("http");
+const getDateNow = require("./date");
 
 function getData(
     forumUrl,
@@ -56,9 +56,8 @@ function getData(
                     titles.length + coursesFiltered.length
                 );
                 console.log("Salvando arquivo...");
-                const dateNow = getDateNow();
                 const jsonData = JSON.stringify(data);
-                saveData(jsonData, dateNow, forumName);
+                saveData(jsonData, forumName);
             }, 1000);
             clearInterval(getForumData);
             isDataInSaveProcess = true;
@@ -68,15 +67,6 @@ function getData(
         currentPage++;
     }, 500);
 
-}
-
-function getDateNow() {
-    const dateNow = new Date()
-        .toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-        .replace(/[:/]+/g, "-")
-        .replace(" ", "H");
-
-    return dateNow;
 }
 
 function getCourseOcurrencesInArray(arr) {
@@ -91,7 +81,9 @@ function getCourseOcurrencesInArray(arr) {
     }));
 }
 
-function saveData(jsonData, date, forumName) {
+function saveData(jsonData, forumName) {
+    const date = getDateNow();
+
     const file = fs.writeFile(
         path.join(
             "./src/data/forumDataOutput",

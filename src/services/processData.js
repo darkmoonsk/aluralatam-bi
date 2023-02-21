@@ -2,9 +2,8 @@ const data = require("../data/data-19-02-2023H21-43-13.json");
 const natural = require("natural");
 
 const tokenizer = new natural.WordTokenizer();
-const stopwords = require("./stopwords.json").stopwords;
-const stemmer = natural.PorterStemmerEs;
-const tokezedWords = tokenizer.tokenize(data.titles.join(" ")).map((word) => word.toLowerCase()).filter((word) => !stopwords.includes(word));
+const stopwords = require("../stopwords.json").stopwords;
+const tokezedWords = tokenizer.tokenize(data.titles.join(" ")).map((word) => word.toLowerCase())
 
 
 //frequency = natural.FrequencyDist(tokezedTitles);
