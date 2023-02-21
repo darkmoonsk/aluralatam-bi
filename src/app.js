@@ -4,14 +4,13 @@ const forumUrls = require("./forumUrl");
 const forums = ["frontend", "java", "dataScience", "devops", "offtopic"];
 
 
-
 const titleSelector = "a.forumList-item-subject-info-title-link";
 const courseNameSelector = "ol.topic-breadCrumb-list li:nth-child(3) a";
 
 
 
 while(true){
-    const option = Number(readlineSync.question("Digite 1 para ler o forum ou 2 para sair: "));
+    const option = Number(readlineSync.question("Digite 1 para ler o forum ou 0 para sair: "));
 
     if(option === 1) {
         const forumIndex = readlineSync.keyInSelect(forums,"De qual forum deseja pegar os dados? ");
@@ -19,7 +18,7 @@ while(true){
         getData(forumUrls[forums[forumIndex]], forumPages, titleSelector, courseNameSelector, forums[forumIndex]);
 
         break;
-    }else if(option === 2) {
+    }else if(option === 0) {
         console.log("Saindo...");
         break
     }
