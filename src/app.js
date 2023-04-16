@@ -1,6 +1,6 @@
 const fs = require("fs");
 const readlineSync = require("readline-sync");
-const getData = require("./services/aluraWebScraping");
+const getData = require("./services/webScraping");
 const watson = require("./services/watson");
 const forumUrls = require("./forumUrl");
 const forums = ["frontend", "java", "dataScience", "devops", "offtopic"];
@@ -28,7 +28,7 @@ while(true){
     } else if (option === 1) { //Analisar dados
         console.clear();
         const fileName = readlineSync.question("Digite o nome do arquivo que deseja analisar: ");
-        const data = require(`./data/forumDataOutput/${fileName}.json`).titles;
+        const data = require(`./data/forumDataOutput/${fileName}.json`).allTitles;
         watson.processData(data);
         break;
 

@@ -10,14 +10,9 @@ const getDateNow = require("./date");
 
 
 async function processData(data) {
-
-    // const tokenizer = new natural.WordTokenizer();
-    // const stopwords = require("../stopwords.json").stopwords;
-    // const tokenizedWords = tokenizer.tokenize(data.join(" ")).filter(word => !stopwords.includes(word)).map((word) => word.toLowerCase()).join(" ");
+    //const tokenizedData = tokenizeData(data);
 
     await watsonNLU(data.join(" "));
-    
-    
 }
 
 async function watsonNLU(text){
@@ -32,10 +27,16 @@ async function watsonNLU(text){
     const analyzeParams = {
         "text": text,
         "features": {
+            "concepts": {
+                "limit": 100
+            },
             "keywords": {
                 "emotion": true,
                 "sentiment": true,
                 "limit": 100
+            },
+            "categories": {
+                "limit": 20
             }
         }
     };
@@ -59,6 +60,27 @@ async function watsonNLU(text){
         return err;
     });
 }
+
+function tokenizeData(data) {
+    const tokenizer = new natural.WordTokenizer();
+    const stopwords = require("../stopwords.json").stopwords;
+    const tokezedWords = tokenizer.tokenize(data.join(" ")).map((word) => word.toLowerCase())
+
+    return tokezedWords;
+}
+
+
+/**** Teste  ****/ 
+
+// tokenizeData({
+//     titles: [
+//         "Como criar um site com HTML e CSS",
+//         "Dividindo o layout em partes",
+//         "CSS - Posicionamento",
+//         "CSS - Box Model",
+//         "Display: inline e display: inline-block",
+//     ]
+// })
 
 module.exports = { processData };
 
